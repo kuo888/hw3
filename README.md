@@ -1,1 +1,1 @@
-# time.h
+# string.h
