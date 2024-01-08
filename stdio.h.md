@@ -739,3 +739,502 @@ int main(void){
 }
 ```
 (出自c語言網)
+
+
+
+25.void perror（char *str）;  //輸出系統錯誤資訊
+```
+#include<stdio.h>
+ 
+int main(void){
+ 
+   FILE *fp = fopen("perror.dat", "r");
+ 
+   if (!fp){
+ 
+      perror("Unable to open file for reading");
+ 
+   }
+ 
+   return 0;
+ 
+}
+```
+(出自c語言網)
+
+
+
+26.int putc（int ch， FILE *stream）;   //輸出一字元到指定流中(成功以無符號 char強制轉換為 int 的形式返回寫入的字元 ，失敗返回 EOF。)
+```
+#include<stdio.h>
+ 
+int main(void){
+ 
+   char msg[] = "www.dotcpp.com\n";
+ 
+   int i = 0;
+ 
+   while (msg[i]){
+ 
+      putc(msg[i++], stdout);
+ 
+   }
+ 
+   return 0;
+ 
+}
+```
+(出自c語言網)
+
+
+
+27.int putchar（int ch）;  //在stdout上輸出字元
+```
+#include<stdio.h>
+ 
+int main(void){
+ 
+   putchar('w'); 
+ 
+   putchar('w');
+ 
+   putchar('w');
+ 
+   putchar('.');
+ 
+   putchar('d');
+ 
+   putchar('o');
+ 
+   putchar('t');
+ 
+   putchar('c');
+ 
+   putchar('p');
+ 
+   putchar('p');
+ 
+   putchar('.');
+ 
+   putchar('c');
+ 
+   putchar('o');
+ 
+   putchar('m');
+ 
+   putchar('\n');
+ 
+   return 0;
+ 
+}
+```
+(出自c語言網)
+
+
+
+28.int puts（char *str）;   //把一個字串寫入到標準輸出 stdout
+```
+#include<stdio.h>
+ 
+int main(void){
+ 
+   char str[] = "www.dotcpp.com\n";
+ 
+   puts(str);
+ 
+   return 0;
+ 
+}
+```
+(出自c語言網)
+
+
+
+29.int putw（int w， FILE *stream）;  //把一字元或字送到流中
+```
+#include<stdio.h>
+ 
+int main(void){
+ 
+   int word=49;
+ 
+   int res=putw(word,stdout);
+ 
+   printf("\nThe return value is %d\n",res);
+ 
+   return 0;
+ 
+}
+```
+(出自c語言網)
+
+
+
+30.int remove（char *filename）;  //刪除一個檔
+```
+#include<stdio.h>
+ 
+int main(void){
+ 
+   char file[80];
+ 
+   printf("File to delete: ");
+ 
+   gets(file);
+ 
+   if (remove(file) == 0){
+ 
+      printf("Removed %s.\n",file);
+ 
+   }else{
+ 
+      perror("remove");
+ 
+   }
+ 
+   return 0;
+ 
+}
+```
+(出自c語言網)
+
+
+
+31.int rename（char *oldname， char *newname）;   //重新命名檔
+```
+#include<stdio.h>
+ 
+int main(void){
+ 
+   char oldname[80], newname[80];
+ 
+   printf("File to rename: ");
+ 
+   gets(oldname);
+ 
+   printf("New name: ");
+ 
+   gets(newname);
+ 
+   if (rename(oldname, newname) == 0){
+ 
+      printf("Renamed %s to %s.\n", oldname, newname);
+ 
+   }else{
+ 
+      perror("rename");
+ 
+   }
+ 
+   return 0;
+ 
+}
+```
+(出自c語言網)
+
+
+
+32.int rewind（FILE *stream）;  //將文件指標重新指向一個流的開頭
+```
+#include<stdio.h>
+ 
+int main(void){
+ 
+   FILE *fp=fopen("D:\\a.txt","w+");
+ 
+   if(!fp){
+ 
+      printf("can not open the file\n");
+ 
+      return 0;
+ 
+   }
+ 
+   fprintf(fp,"abcdefghijklmnopqrstuvwxyz");
+ 
+   int first=ftell(fp);
+ 
+   rewind(fp);
+ 
+   int second=ftell(fp);
+ 
+   printf("First pointer is %d,after call the rewind() is %d\n",first,second);
+ 
+   fclose(fp);
+ 
+   remove("D:\\a.txt");
+ 
+   return 0;
+ 
+}
+```
+(出自c語言網)
+
+
+
+33.int ungetc（char c， FILE *stream）;   //把一個字元退回到輸入流中(成功 返回字元 ，失敗返回 EOF，且流 stream 保持不變)
+```
+#include <stdio.h>
+ 
+#include <ctype.h>
+ 
+int main( void ){
+ 
+   int i=0;
+ 
+   char ch;
+ 
+   puts("Input an integer followed by a char:");
+ 
+   if((ch = getchar()) != EOF && isdigit(ch)){ //獲取字符，如果是數字類型
+ 
+      i = ch - 48;  
+ 
+   }
+ 
+   ungetc(ch, stdin);  //退回給输入緩衝區
+ 
+  printf("i = %d, next char in buffer = %c\n", i, getchar());
+ 
+   return 0;
+ 
+}
+```
+(出自c語言網)
+
+
+
+34.int ungetch（int c）;   // 把一個字元退回到鍵盤緩衝區中
+```
+#include<stdio.h>
+ 
+#include<conio.h>
+ 
+#include<ctype.h>
+ 
+int main( void ){
+ 
+   int i=0;
+ 
+   char ch;
+ 
+   puts("Input an integer followed by a char:");
+ 
+   while((ch = getche()) != EOF && isdigit(ch)){
+ 
+      i = 10 * i + ch - 48;
+ 
+   }
+ 
+   if (ch != EOF){
+ 
+      ungetch(ch);
+ 
+   }
+ 
+  printf("\ni = %d, next char in buffer = %c\n", i, getch());
+ 
+   return 0;
+ 
+}
+ 
+```
+(出自c語言網)
+
+
+
+35.FILE *tmpfile（void）;  // 以二進位方式打開暫存檔
+```
+#include<stdio.h>
+ 
+int main(void){
+ 
+   FILE *tempfp = tmpfile();
+ 
+   if (tempfp){
+ 
+      printf("Temporary file created\n");
+ 
+   }else{
+ 
+      printf("Unable to create temporary file\n");
+ 
+      exit(1);
+ 
+   }
+ 
+   return 0;  
+ 
+}
+```
+(出自c語言網)
+
+
+
+36.char *tmpnam（char *sptr）;  //建立唯一的檔案名稱
+```
+#include<stdio.h>
+ 
+int main(void){
+ 
+   char name[13];
+ 
+   tmpnam(name);
+ 
+   printf("Temporary name: %s\n", name);
+ 
+   return 0;
+ 
+}
+```
+(出自c語言網)
+
+
+
+37.void setbuf（FILE *steam， char *buf）;  //把緩衝區與流相聯，FILE *stream 為要處理的流，char *buf 為要處理的緩衝區
+```
+#include<stdio.h>
+ 
+char outbuf[BUFSIZ];
+ 
+int main(void){
+ 
+   setbuf(stdout, outbuf);  //將緩衝區與流相關聯
+ 
+   puts("This is a test of buffered output.\n\n");  //將字符寫入緩衝區
+ 
+   puts("This output will go into outbuf\n");
+ 
+   puts("and won't appear until the buffer\n");
+ 
+   puts("fills up or we flush the stream.\n");
+ 
+   fflush(stdout);  //刷新緩衝區
+ 
+   return 0;
+ 
+}
+```
+(出自c語言網)
+
+
+
+38.setvbuf（）  //把緩衝區與流相關
+```
+#include<stdio.h>
+ 
+int main(void){ 
+ 
+   char bufr[512];
+ 
+   FILE *input = fopen("file.in", "rb+");
+ 
+   if(!input){
+ 
+      printf("can not open the file\n");
+ 
+   }
+ 
+   FILE *output = fopen("file.out", "w");
+ 
+   if(!output){
+ 
+      printf("can not open the file\n");
+ 
+   }
+ 
+   if (setvbuf(input, bufr, _IOFBF, 512)){
+ 
+      printf("failed to set up buffer for input file\n");
+ 
+   }else{
+ 
+      printf("buffer set up for input file\n");
+ 
+   }
+ 
+   if (setvbuf(output, NULL, _IOLBF, 512)) {
+ 
+      printf("failed to set up buffer for output file\n");
+ 
+   }else{
+ 
+      printf("buffer set up for output file\n");
+ 
+   }
+ 
+   fclose(input);
+ 
+   fclose(output);
+ 
+   return 0;
+ 
+}
+```
+(出自c語言網)
+
+
+
+39.sprintf()   //输出到字符串中
+```
+#include<stdio.h>
+ 
+#include<math.h>
+ 
+int main(void){
+ 
+   char buffer[80];
+ 
+   sprintf(buffer, "An approximation of Pi is %f", M_PI);
+ 
+   puts(buffer);
+ 
+   return 0;
+ 
+}
+```
+(出自c語言網)
+
+
+
+40.sscanf()  //執行從字串中的格式化輸入
+```
+#include<stdio.h>
+ 
+#include<string.h>
+ 
+int main(void){
+ 
+   char s1[]="9.4 8.2 7...";
+ 
+   char s2[50];
+ 
+   char c;
+ 
+   int i;
+ 
+   float f;
+ 
+   sscanf(s1,"%s",s2);  //从缓冲区中读取数据
+ 
+   sscanf(s1,"%c",&c); 
+ 
+   sscanf(s1,"%d",&i); 
+ 
+   sscanf(s1,"%f",&f);
+ 
+   printf("string=%s\n",s1);
+ 
+   printf("str=%s\n",s2);
+ 
+   printf("character=%c\n",c);
+ 
+   printf("integer=%d\n",i);
+ 
+   printf("real=%f\n",f);
+ 
+   return 0;
+ 
+}
+```
+(出自c語言網)
